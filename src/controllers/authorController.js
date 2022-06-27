@@ -64,7 +64,7 @@ if (!data.lname) {
 if (!data.title) {
   return res.status(400).send({status:false ,msg:"Title is missing"});
 }
-if (data.title != ('Mr' || 'Mrs' || 'Miss'))
+if (data.title != ('Mr' && 'Mrs' && 'Miss'))
       return res.status(400).send({ status: false, msg: 'Enter valid title' });
         
 
