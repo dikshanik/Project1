@@ -82,7 +82,7 @@ if (data.title != ('Mr' && 'Mrs' && 'Miss'))
 // AUTHOR LOGIN
 const authorLogin = async function (req, res) {
   try{
-  let email = req.body.emailId;
+  let email = req.body.email;
   if (!email)
   return res.status(400).send({ err: 'ENTER EMAILID' }); 
   let password = req.body.password;
