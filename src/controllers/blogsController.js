@@ -1,6 +1,7 @@
 const blogsModel = require("../models/blogsModel");
 const authorModel = require("../models/authorModel");
 const jwt = require("jsonwebtoken");
+const date = new Date();
 
 const createBlog = async function (req, res) {
   try {
@@ -73,31 +74,49 @@ const getBlogs = async function (req, res) {
     if (allBlogs.length == 0) {
       return res.status(404).send({ msg: 'BLOGS NOT FOUND' });
     }
-    res.status(200).send(allBlogs);
+    res.status(200).send({status:true, allBlogs});
   } catch (err) {
     res.status(500).send({ msg: 'Error', error: err.message });
   }
 };
 
+
 // UPDATEBLOG
 const updateBlog = async function (req, res) {
   try {
-    let body = req.body;
     let id = req.params.blogsId;
-    let blog = await blogsModel.findById({ _id: id });
-    if (!blog) {
-      return res.status(404).send('NO SUCH BLOG FOUND');
+
+    let data = req.body;
+
+    let blog = await blogsModel.findOne({ _id: id, isDeleted: false });
+
+    if (Object.keys(blog).length == 0) {
+      return res.status(404).send('No such blog found');
     }
-    if (blog.isDeleted == true) {
-      return res.status(404).send({ err: 'BLOGS NOT FOUND' });
+
+    if (data.title) blog.title = data.title;
+
+    if (data.category) blog.category = data.category;
+
+    if (data.body) blog.body = data.body;
+
+    if (data.tags) {
+      blog.tags.push(data.tags);
     }
-    let data = await blogsModel.findByIdAndUpdate({ _id: id }, body, {$set: {
-      isPublished: true,
-      publishedAt: Date(),
-      },
+
+    if (data.subcategory) {
+      blog.subcategory.push(data.subcategory);
+    }
+
+    blog.isPublished = true;
+
+    blog.publishedAt = Date();
+
+    let updateData = await blogsModel.findByIdAndUpdate({ _id: id }, blog, {
       new: true,
     });
-    res.status(200).send({ msg: data });
+
+    res.status(200).send({ status: true, msg: updateData });
   } catch (err) {
     res.status(500).send({ msg: 'Error', error: err.message });
   }
