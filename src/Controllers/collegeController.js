@@ -33,7 +33,7 @@ const createCollege = async function (req, res) {
         }
 
         // validation for FullName
-        if (!fname || (typeof (fname) != "string" || !fname.match(/^[A-Za-z]+$/))) {
+        if (!fname || (typeof (fname) != "string")) {
                return res.status(400).send({
                 status: false,
                 msg: "Full Name should contain only alphabets"
