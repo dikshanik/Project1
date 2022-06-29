@@ -36,7 +36,7 @@ const createCollege = async function (req, res) {
         if (!fname || (typeof (fname) != "string")) {
                return res.status(400).send({
                 status: false,
-                msg: "Full Name should contain only alphabets"
+                msg: "Full Name is required"
             })
         } 
    
@@ -67,7 +67,7 @@ const createCollege = async function (req, res) {
             msg: "College name is already Registred"
         })
     } 
-
+   // After passing all the validation we created the college data here
     let savedData = await CollegeModel.create(data)
         res.status(201).send({
             status: true,
