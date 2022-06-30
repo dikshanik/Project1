@@ -103,6 +103,7 @@ const getCollegeDetails = async function (req, res){
              message : 'college does not exist'
            })
     }
+     
     const interns = await InternModel.find({ collegeId: newCollegeName._id, isDeleted: false})
     if(!interns){
      return res.status(404).send({

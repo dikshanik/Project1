@@ -50,9 +50,9 @@ const createIntern = async function (req, res) {
         //Checks For Unique Email Id
       let checkEmail = await InternModel.findOne({ email: mail })
         if(checkEmail) {
-            return res.status(400).send({
+            return res.status(409).send({
             status: false,
-            msg: "Email Id already Registred"
+            msg: "Email Id is already in use"
          })
  }
      
