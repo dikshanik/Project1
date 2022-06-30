@@ -28,12 +28,12 @@ const createCollege = async function (req, res) {
         if (!sname || (typeof (sname) != "string" || !sname.match(/^[A-Za-z]+$/))) {
                 return res.status(400).send({
                 status: false,
-                msg: "Name is Missing or should contain only alphabets"
+                msg: "Name is required and it should contain only alphabets"
             })
         }
 
         // validation for FullName
-        if (!fname || (typeof (fname) != "string" || !fname.match(/^[a-zA-Z][a-zA-Z, ]+[a-zA-Z]+$/))) {
+        if (!fname || (typeof (fname) != "string")) {
                return res.status(400).send({
                 status: false,
                 msg: "Full Name is required"
@@ -64,7 +64,7 @@ const createCollege = async function (req, res) {
      if (collegeNameAlreadyUsed) {
          return res.status(400).send({
             status: false,
-            msg: "College name is already Registred"
+            msg: "College name is already exist in our database"
         })
     } 
    // After passing all the validation we created the college data here

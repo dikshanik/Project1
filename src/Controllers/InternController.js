@@ -30,7 +30,7 @@ const createIntern = async function (req, res) {
           if(!ssname || (typeof (ssname) != "string" || !ssname.match(/^[A-Z][a-z]+\s[A-Z][a-z]+$/))) { // we use regex function it match first name and last name
             return res.status(400).send({
             status: false,
-            msg: "Name is Missing or should contain only alphabets"
+            msg: "First name and last name is required"
         })
      } 
 
