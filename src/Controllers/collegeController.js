@@ -33,7 +33,7 @@ const createCollege = async function (req, res) {
         }
 
         // validation for FullName
-        if (!fname || (typeof (fname) != "string")) {
+        if (!fname || (typeof (fname) != "string" || !fname.match(/^[a-zA-Z][a-zA-Z, ]+[a-zA-Z]+$/))) {
                return res.status(400).send({
                 status: false,
                 msg: "Full Name is required"
