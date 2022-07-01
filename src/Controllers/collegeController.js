@@ -15,6 +15,7 @@ const createCollege = async function (req, res) {
         let sname = data.name
         let fname = data.fullName
         let link = data.logoLink
+        
 
         // validation to check if data is coming or not in request body
         if(Object.keys(data).length == 0){
@@ -31,6 +32,8 @@ const createCollege = async function (req, res) {
                 msg: "Name is required and it should contain only alphabets"
             })
         }
+
+
 
         // validation for FullName
         if (!fname || (typeof (fname) != "string")) {
@@ -88,15 +91,15 @@ const createCollege = async function (req, res) {
 
 const getCollegeDetails = async function (req, res){
      try {
-        let collegeName = req.query.name
+        let college_Name = req.query.collegeName
 
-        if(!collegeName){
+        if(!college_Name){
             return res.status(400).send({
              status: false,
              message: 'College name is required to access data'
             })
         }
-        let newCollegeName = await CollegeModel.findOne({name: collegeName})
+        let newCollegeName = await CollegeModel.findOne({name: college_Name})
         if(!newCollegeName){
             return res.status(404).send({
              status: false,
@@ -104,7 +107,7 @@ const getCollegeDetails = async function (req, res){
            })
     }
      
-    const interns = await InternModel.find({ collegeId: newCollegeName._id, isDeleted: false})
+    const interns = await InternModel.find({ collegeName: newCollegeName._id, isDeleted: false})
     if(!interns){
      return res.status(404).send({
        status: false,

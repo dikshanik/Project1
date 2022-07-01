@@ -17,6 +17,7 @@ const createIntern = async function (req, res) {
         let mail = data.email
         let phone = data.mobile
         let college_Id = data.collegeId 
+        let sname = data.collegeName
 
         // validation to check if data is coming or not in request body
            if(Object.keys(data).length == 0){
@@ -33,6 +34,15 @@ const createIntern = async function (req, res) {
             msg: "First name and last name is required"
         })
      } 
+     
+     if (!sname || (typeof (sname) != "string" || !sname.match(/^[A-Za-z]+$/))) {
+        return res.status(400).send({
+        status: false,
+        msg: "Name is required and it should contain only alphabets"
+    })
+}
+
+
 
         // validation for email 
          if (!mail || (typeof (mail) != "string")) {
