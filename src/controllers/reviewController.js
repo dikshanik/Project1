@@ -50,13 +50,9 @@ const createReview = async function (req, res) {
         .send({ status: false, message: "Reviewed Name must be present" });
     }
     if (!isValidName(reviewedBy)) {
-      return res.status(400).send({ status: false, message: "" });
+      return res.status(400).send({ status: false, message: "Invalid reviewedBy" });
     }
-    // if (!isValidName(review)) {
-    //   return res
-    //     .status(400)
-    //     .send({ status: false, message: "Review must be present" });
-    // }
+ 
     if (!isEmpty(data.bookId)) {
       return res
         .status(400)
@@ -134,10 +130,7 @@ const updateReview = async (req, res) => {
       { new: true }
     );
 
-//     const updateBook = await bookModel.find({
-//       bookId: bookId,
-//       isDeleted: false,
-//     }).select({__v:0, createdAt: 0, updatedAt: 0, isDeleted: 0});
+
 
     let {...updatedBook} = checkBook;
     updatedBook._doc.reviewesData = updatedReview;

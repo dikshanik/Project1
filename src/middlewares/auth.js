@@ -20,21 +20,7 @@ const authenticate = function (req, res, next) {
 };
 
 // AUTHORATION
-// const authorise = async function (req, res, next) {
-//     try {
-//       token = req.headers['x-api-key'];
-//       let bookId = req.params.bookId;
-//       let decodedToken = jwt.verify(token, 'group-39');
-//       let loggedInUser = decodedToken.userId;
-//       let bookData = await bookModel.findById({ userId: loggedInUser, _id: bookId });
-//       if (!bookData)
-//         return res.status(403).send({status: false, msg: 'YOU ARE NOT AUTHORIZED',
-//         });
-//       next();
-//     } catch (err) {
-//       res.status(500).send({ Status: 'SERVER ERROR', Msg: err.message });
-//     }
-//   };
+
   
 
 //<-----------------This function is used Authorisation of a user------------->//

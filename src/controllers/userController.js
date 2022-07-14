@@ -58,7 +58,7 @@ const createUser = async function (req, res) {
     if(!isValidName(name)) {
         return res.status(400).send({ status: false, msg: "Name should contain alphabet only"});
     }
-    name = name.toLowerCase();
+   
     if(!isValidPhone(phone)) {
         return res.status(400).send({ status: false, msg: "Phone no should contains 10 digits only"});
     }
@@ -75,7 +75,6 @@ const createUser = async function (req, res) {
     if(!isValidEmail(email)) {
         return res.status(400).send({ status: false, msg: "Email should be in correct format"});
     }
-    email = email.toLowerCase();
     let phoneCheck = await userModel.findOne({ phone: phone}); 
     if(phoneCheck) {
         return res.status(400).send({ status: false, msg: "Phone no. is already exist"});
@@ -127,7 +126,7 @@ const userLogin = async function (req, res) {
       },
       "group-39"
     );
-    console.log(token);
+   
     //   data.token = { exp, userId, expiresIn};
     res.setHeader("x-api-key", token);
     res

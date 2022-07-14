@@ -51,7 +51,7 @@ const createBook = async function (req, res) {
     if (!isValidExcerpt(excerpt)) {
       return res.status(400).send({
         status: false,
-        message: "excerpt should be in alphabatical order",
+        message: "excerpt should be in alphabatical",
       });
     }
     let checkTitle = await bookModel.findOne({ title: title });
@@ -76,10 +76,8 @@ const createBook = async function (req, res) {
         .status(400)
         .send({ status: false, message: "ISBN already exist" });
     }
-    releasedAt = Date.now().toLocaleString;
-    // if(!isValidDate(releasedAt)) {
-    //   return res.status(400).send({ status: false, msg: "Please provide a valid date in 'YYYY-MM-DD' format" });
-    // }
+    data.releasedAt = Date.now();
+    
     let savedData = await bookModel.create(data);
 
     return res.status(201).send({
@@ -97,33 +95,32 @@ const getBooks = async function (req, res) {
   try {
     let queryData = req.query;
 
-    let validAuthorId = req.tokenId;
+    let validUserId = req.tokenId;
 
     if (Object.keys(queryData) == 0) {
-      let blog = await bookModel.find({
-        userId: validAuthorId,
+      let book = await bookModel.find({
+        userId: validUserId,
         isDeleted: false,
       });
 
-      if (blog.length == 0) {
-        return res.status(404).send({ status: false, msg: "No Blog Found" });
+      if (book.length == 0) {
+        return res.status(404).send({ status: false, msg: "No Book Found" });
       }
-      return res.status(200).send({ status: true, msg: blog });
+      return res.status(200).send({ status: true, msg: book });
     }
 
     let { userId, category, subcategory } = queryData;
-    let ObjectId = isValidObjectId(userId);
-
     let addObj = { isDeleted: false };
+    
+      let ObjectId = isValidObjectId(userId);
 
-    addObj.userId = validAuthorId;
-
+    addObj.userId = validUserId;
+    
     if (!ObjectId) {
       return res
         .status(400)
         .send({ status: false, message: "user is not Valid" });
     }
-
     if (category) {
       addObj.category = category;
     }
@@ -131,7 +128,7 @@ const getBooks = async function (req, res) {
     if (subcategory) {
       addObj.subcategory = subcategory;
     }
-
+  
     let showData = {
       _id: 1,
       title: 1,
@@ -150,8 +147,8 @@ const getBooks = async function (req, res) {
     if (bookData.length == 0) {
       return res.status(404).send({ status: false, message: "No Books found" });
     }
-
-    return res.status.send({
+    
+    return res.status(200).send({
       status: true,
       message: "Books List",
       data: bookData,
@@ -204,7 +201,7 @@ const updateBook = async function (req, res) {
     let { title, excerpt, releasedAt, ISBN } = data;
     let bookId = req.params.bookId;
     if (!isValidObjectId(bookId)) {
-      return res.status(404).send({
+      return res.status(400).send({
         status: false,
         message: "Invalid BookId",
       });
